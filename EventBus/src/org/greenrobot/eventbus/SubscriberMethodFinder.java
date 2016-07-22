@@ -15,9 +15,12 @@
  */
 package org.greenrobot.eventbus;
 
+import android.util.Log;
+
 import org.greenrobot.eventbus.meta.SubscriberInfo;
 import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -156,8 +159,8 @@ class SubscriberMethodFinder {
             // Workaround for java.lang.NoClassDefFoundError, see https://github.com/greenrobot/EventBus/issues/149
             try{
                 methods = findState.clazz.getMethods();
-            }catch (Exception e){
-                e.printStackTrace();
+            }catch (Throwable e){
+                Log.w("EventBus getMethods","Not found class:"+e.getMessage());
                 methods = new Method[0];
             }
             findState.skipSuperClasses = true;

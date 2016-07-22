@@ -154,7 +154,12 @@ class SubscriberMethodFinder {
             methods = findState.clazz.getDeclaredMethods();
         } catch (Throwable th) {
             // Workaround for java.lang.NoClassDefFoundError, see https://github.com/greenrobot/EventBus/issues/149
-            methods = findState.clazz.getMethods();
+            try{
+                methods = findState.clazz.getMethods();
+            }catch (Exception e){
+                e.printStackTrace();
+                methods = new Method[0];
+            }
             findState.skipSuperClasses = true;
         }
         for (Method method : methods) {
